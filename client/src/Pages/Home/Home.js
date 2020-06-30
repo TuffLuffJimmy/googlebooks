@@ -16,7 +16,8 @@ const useStyles = makeStyles({
 		maxWidth: 600,
 	},
 	media: {
-		height: 140,
+		height: 192,
+		width: 128,
 	},
 })
 
@@ -42,6 +43,22 @@ const Home = () => {
 			.catch((e) => console.error(e))
 	}
 
+	bookState.handleSaveBook = (book) => {
+		axios.post('/api/books', {
+			id: book.id,
+			title: book.volumeInfo.title,
+			author: book.volumeInfo.authors,
+			description: book.volumeInfo.description,
+			image: book.volumeInfo.imageLinks.thumbnail,
+			link: book.volumeInfo.infoLink
+		})
+			.then(() => {
+				const books = bookState.books
+				const booksFiltered = books.filter(volume => volume.id !== book.id)
+				setBookState({ ...bookState, books: booksFiltered })
+			})
+			.catch(e => console.log(e))
+	}
 	return (
 		<>
 			<form onSubmit={bookState.handleSearchBook}>
@@ -71,10 +88,14 @@ const Home = () => {
 						/>
 						<CardContent>{book.volumeInfo.description}</CardContent>
 						<CardActions>
-							<Button size="small" color="primary">
+							<Button
+								size="small"
+								color="primary"
+								onClick={() => bookState.handleSaveBook(book)}
+							>
 								Save
 							</Button>
-							<Button link={book.volumeInfo.infoLink}>Visit</Button>
+							<Button href={book.volumeInfo.infoLink}>Visit</Button>
 						</CardActions>
 					</Card>
 				))}
