@@ -7,24 +7,26 @@ import {
 import Home from './Pages/Home'
 import Saved from './Pages/Saved'
 import Navbar from './components/Navbar'
+import Container from '@material-ui/core/Container'
 
 const App = () => {
 	return (
-  <Router>
-    <div>
-      <Navbar />
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-        <Route path='/saved'>
-          <Saved />
-        </Route>
-      </Switch>
-    </div>
-  </Router>
-
-  )
+		<Router>
+			<div>
+				<Container>
+					<Navbar />
+					<Switch>
+						<Route exact path="/">
+							<Home />
+						</Route>
+						<Route path="/saved">
+							<Saved />
+						</Route>
+					</Switch>
+				</Container>
+			</div>
+		</Router>
+	)
 }
 
 export default App
