@@ -4,10 +4,26 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
+import Home from './Pages/Home'
+import Saved from './Pages/Saved'
+import Navbar from './components/Navbar'
 
 const App = () => {
 	return (
-  <div></div>
+  <Router>
+    <div>
+      <Navbar />
+      <Switch>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+        <Route path='/saved'>
+          <Saved />
+        </Route>
+      </Switch>
+    </div>
+  </Router>
+
   )
 }
 
