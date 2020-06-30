@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -10,7 +11,17 @@ import Typography from '@material-ui/core/Typography'
 import CardHeader from '@material-ui/core/CardHeader'
 import axios from 'axios'
 
+const useStyles = makeStyles({
+	root: {
+		maxWidth: 600,
+	},
+	media: {
+		height: 140,
+	},
+})
+
 const Home = () => {
+	const classes = useStyles()
 	const [bookState, setBookState] = useState({
 		search: '',
 		books: [],
@@ -51,19 +62,19 @@ const Home = () => {
 			</form>
 			<div>
 				{bookState.books.map((book) => (
-					<Card>
+					<Card className={classes.root}>
 						<CardHeader title={book.volumeInfo.title} />
-						<CardMedia image={book.volumeInfo.imageLinks.smallThumbnail} title={book.volumeInfo.authors} />
-						<CardContent>
-							{book.volumeInfo.description}
-						</CardContent>
+						<CardMedia
+							className={classes.media}
+							image={book.volumeInfo.imageLinks.thumbnail}
+							title={book.volumeInfo.authors}
+						/>
+						<CardContent>{book.volumeInfo.description}</CardContent>
 						<CardActions>
 							<Button size="small" color="primary">
 								Save
 							</Button>
-							<Button link={book.volumeInfo.infoLink}>
-								Visit
-							</Button>
+							<Button link={book.volumeInfo.infoLink}>Visit</Button>
 						</CardActions>
 					</Card>
 				))}
